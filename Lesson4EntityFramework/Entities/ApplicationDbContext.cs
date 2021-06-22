@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Lesson4EntityFramework.FluentApiConfigs;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,10 @@ namespace Lesson4EntityFramework.Entities
                     Name="test"
                 }
             });
+
+            modelBuilder.ApplyConfiguration(new UsersFluentApiConfigurations());
+           
+
             base.OnModelCreating(modelBuilder);
         }
     }
