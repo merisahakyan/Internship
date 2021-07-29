@@ -1,3 +1,9 @@
+using Lesson4EntityFramework.BusinessLogicLayer.Interfaces;
+using Lesson4EntityFramework.BusinessLogicLayer.Services;
+using Lesson4EntityFramework.DataAccessLayer;
+using Lesson4EntityFramework.DataAccessLayer.CreditCardsFactory;
+using Lesson4EntityFramework.DataAccessLayer.Interfaces;
+using Lesson4EntityFramework.DataAccessLayer.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +32,11 @@ namespace Lesson4EntityFramework
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddScoped(typeof(ICreditCardService), typeof(CreditCardService));
+            services.AddScoped(typeof(IUsersRepository), typeof(UsersRepository));
+            services.AddScoped(typeof(IGroupRepository), typeof(GroupRepository));
+            services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+            services.AddScoped(typeof(IUserService), typeof(UserService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

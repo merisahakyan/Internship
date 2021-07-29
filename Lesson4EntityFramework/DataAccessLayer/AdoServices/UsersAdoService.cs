@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Lesson4EntityFramework.DataAccessLayer
+namespace Lesson4EntityFramework.DataAccessLayer.AdoServices
 {
     public class UsersAdoService
     {

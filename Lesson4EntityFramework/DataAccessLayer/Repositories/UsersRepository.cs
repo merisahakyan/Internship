@@ -1,4 +1,5 @@
-﻿using Lesson4EntityFramework.Entities;
+﻿using Lesson4EntityFramework.DataAccessLayer.Interfaces;
+using Lesson4EntityFramework.Entities;
 using Lesson4EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -6,14 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Lesson4EntityFramework.DataAccessLayer
+namespace Lesson4EntityFramework.DataAccessLayer.Repositories
 {
-    public class UsersService
+    public class UsersRepository : IUsersRepository
     {
         private readonly ApplicationDbContext _dbContext;
-        public UsersService()
+        public UsersRepository(ApplicationDbContext dbContext)
         {
-            _dbContext = new ApplicationDbContext();
+            _dbContext = dbContext;
         }
 
         public async Task<List<AddressUserCountModel>> GetAddressWithUsersCount()
@@ -34,6 +35,17 @@ namespace Lesson4EntityFramework.DataAccessLayer
             return addressList;
         }
 
+        public async Task<User> GetUserById(int userId)
+        {
+            var query = from u in _dbContext.Users
+                        where u.Id == userId
+                        select u;
+
+            var user = await query.FirstOrDefaultAsync();
+
+            return user;
+        }
+
         public async Task CreateNewUser(int addressId)
         {
             var user = new User
@@ -49,15 +61,10 @@ namespace Lesson4EntityFramework.DataAccessLayer
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task UpdateNewUser(int userId)
+        public async Task UpdateUserEmail(User user, string email)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(user => user.Id == userId);
-
             if (user == null)
-            {
-                //TODO : needs to be implemented custom NotFoundException
                 return;
-            }
 
             user.Email = "test email 2";
             _dbContext.Users.Update(user);
@@ -76,5 +83,23 @@ namespace Lesson4EntityFramework.DataAccessLayer
             _dbContext.Users.Remove(user);
             await _dbContext.SaveChangesAsync();
         }
+
+        //ՉԻ ԿԱՐԵԼԻ 2 գործողություն մեկ ֆունկցիայում
+        //public async Task<User> GetAndUpdateUserById(int userId)
+        //{
+        //    var query = from u in _dbContext.Users
+        //                where u.Id == userId
+        //                select u;
+
+        //    var user = await query.FirstOrDefaultAsync();
+
+        //    user.FirstName = "test";
+
+        //    _dbContext.Users.Update(user);
+        //    await _dbContext.SaveChangesAsync();
+
+        //    return user;
+        //}
     }
+
 }
