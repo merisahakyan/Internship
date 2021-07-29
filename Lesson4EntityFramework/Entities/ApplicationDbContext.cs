@@ -1,6 +1,7 @@
 ﻿using Lesson4EntityFramework.FluentApiConfigs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,12 @@ namespace Lesson4EntityFramework.Entities
         public DbSet<User> Users { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Address> Address { get; set; }
+
+        public ApplicationDbContext() { }
+        public ApplicationDbContext(DbContextOptions options) : base(options)
+        {
+
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -41,7 +48,7 @@ namespace Lesson4EntityFramework.Entities
             });
 
             modelBuilder.ApplyConfiguration(new UsersFluentApiConfigurations());
-           
+
 
             base.OnModelCreating(modelBuilder);
         }

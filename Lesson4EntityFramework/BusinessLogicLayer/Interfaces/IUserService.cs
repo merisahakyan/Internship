@@ -7,6 +7,6 @@ namespace Lesson4EntityFramework.BusinessLogicLayer.Interfaces
 {
     public interface IUserService
     {
-        Task GetAndUpdate(int userId);
+        Task<int> GetAndUpdate(int userId);
     }
 }

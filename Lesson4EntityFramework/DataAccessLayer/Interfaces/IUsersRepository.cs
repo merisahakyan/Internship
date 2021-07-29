@@ -9,7 +9,7 @@ namespace Lesson4EntityFramework.DataAccessLayer.Interfaces
     public interface IUsersRepository
     {
         Task<User> GetUserById(int userId);
-        Task CreateNewUser(int addressId);
+        Task<int> CreateNewUser(int addressId);
         Task UpdateUserEmail(User user, string email);
         Task RemoveUser(int userId);
     }

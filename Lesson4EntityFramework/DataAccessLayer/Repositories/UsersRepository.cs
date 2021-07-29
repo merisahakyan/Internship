@@ -46,7 +46,7 @@ namespace Lesson4EntityFramework.DataAccessLayer.Repositories
             return user;
         }
 
-        public async Task CreateNewUser(int addressId)
+        public async Task<int> CreateNewUser(int addressId)
         {
             var user = new User
             {
@@ -59,6 +59,8 @@ namespace Lesson4EntityFramework.DataAccessLayer.Repositories
 
             await _dbContext.Users.AddAsync(user);
             await _dbContext.SaveChangesAsync();
+
+            return user.Id;
         }
 
         public async Task UpdateUserEmail(User user, string email)
